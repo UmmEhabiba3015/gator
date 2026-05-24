@@ -21,6 +21,7 @@ import {
   handlerAgg,
 } from "./lib/commands/aggregate";
 import { middlewareLoggedInFunc } from "./lib/db/middleware/loggedIn";
+import { handlerBrowse } from "./lib/commands/browse";
 
 async function main() {
   const userInput: string[] = [];
@@ -83,6 +84,13 @@ async function main() {
         registry,
         "unfollow",
         middlewareLoggedInFunc(handlerUnfollow),
+      );
+      break;
+         case "browse":
+      registerCommand(
+        registry,
+        "browse",
+        middlewareLoggedInFunc(handlerBrowse),
       );
       break;
     default:

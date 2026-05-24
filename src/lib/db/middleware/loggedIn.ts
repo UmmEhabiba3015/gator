@@ -1,4 +1,4 @@
-import { CommandHandler, UserCommandHandler } from "src/commands";
+import { CommandHandler, UserCommandHandler } from "src/lib/commands/commands";
 import { readConfig } from "src/config";
 import { getUserByName } from "../queries/users";
 

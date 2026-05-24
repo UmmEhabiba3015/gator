@@ -39,54 +39,6 @@ export async function getUsers() {
   }
 }
 
-export async function fetchFeed(feedURL: string) {
-  const response = await fetch(feedURL, {
-    headers: {
-      "User-Agent": "gator",
-    },
-  });
-  const resolvedResponse = await response.text();
-  const parser = new XMLParser({ processEntities: false });
-  const parsed = parser.parse(resolvedResponse);
-
-  const channel = parsed.rss.channel;
-  if (!channel) {
-    console.log("Invalid feed");
-  }
-
-  if (!channel.title || !channel.link || !channel.description) {
-    console.log("Invalid channel data");
-  }
-  const metaData = {
-    title: channel.title,
-    link: channel.link,
-    description: channel.description,
-  };
-
-  let items = [];
-  if (channel.item) {
-    items = Array.isArray(channel.item) ? channel.item : [channel.item];
-  }
-
-  const extractedItems = items.map((item: any) => {
-    if (!item.title || !item.link || !item.description || !item.pubDate) {
-      console.log("Invalid item data");
-    }
-    return {
-      title: item.title,
-      link: item.link,
-      description: item.description,
-      pubDate: new Date(item.pubDate),
-    };
-  });
-
-  const result = {
-    meta: metaData,
-    items: extractedItems,
-  };
-  return result;
-}
-
 export async function getUserById(id: string) {
   try {
     const [result] = await db.select().from(users).where(eq(users.id, id));

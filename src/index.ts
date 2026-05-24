@@ -1,18 +1,25 @@
 import { argv } from "node:process";
 import { readConfig } from "./config";
-import { CommandsRegistry, registerCommand, runCommand } from "./commands";
 import {
-  handlerAddFeed,
-  handlerAgg,
-  handlerFeeds,
+  CommandsRegistry,
+  registerCommand,
+  runCommand,
+} from "./lib/commands/commands";
+import {
+  handlerFollow,
+  handlerFollowing,
+  handlerUnfollow,
+} from "./lib/commands/feed_follows";
+import { handlerAddFeed, handlerFeeds } from "./lib/commands/feeds";
+import {
   handlerLogin,
   handlerRegister,
   handlerReset,
   handlerUsers,
-  handlerFollow,
-  handlerFollowing,
-  handlerUnfollow,
-} from "./command_handlers";
+} from "./lib/commands/users";
+import {
+  handlerAgg,
+} from "./lib/commands/aggregate";
 import { middlewareLoggedInFunc } from "./lib/db/middleware/loggedIn";
 
 async function main() {
